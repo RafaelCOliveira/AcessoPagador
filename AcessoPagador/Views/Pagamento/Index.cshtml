@@ -1,0 +1,65 @@
+@using AcessoPagador.Contracts.Enum
+@using System
+
+@model IEnumerable<AcessoPagador.Contracts.Venda>
+
+@{
+    ViewData["Title"] = "Pagamento";    
+}
+
+<form>
+<table class="table">
+<thead>
+    <tr>
+        <th scope="col">Data do Recebimento</th>
+        <th scope="col">Código da Transação</th>
+        <th scope="col">Tipo</th>
+        <th scope="col">Valor</th>
+        <th scope="col">Quant. Parcelas</th>
+        <th scope="col">Status</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+</thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.payment.ReceivedDate 
+                </td>
+                <td>
+                    @item.payment.PaymentId
+                </td>
+                <td>
+                    @item.payment.Type
+                </td>
+                <td>
+                    @item.payment.Amount
+                </td>
+                <td>
+                    @item.payment.Installments
+                </td>
+                <td>
+                    @(Enum.GetName(typeof(StatusTransacaoEnum), item.payment.Status)) 
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary" asp-controller="Pagamento" asp-action="Visualizar" asp-route-id=@item.payment.PaymentId>Visualizar</button>
+                </td>
+                <td>
+    
+                </td>
+                <td>
+
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+</form>
+<form asp-controller="Pagamento" asp-action="Pagar" method="GET">
+    <button type="submit" class="btn btn-primary">Novo Pagamento</button>
+</form>

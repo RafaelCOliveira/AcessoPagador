@@ -1,0 +1,123 @@
+﻿@using AcessoPagador.Contracts.Enum
+
+@model AcessoPagador.Contracts.Venda
+
+@{
+    ViewData["Title"] = "Pagamento";
+}
+
+
+<form id="myForm" asp-controller="Pagamento" asp-action="Pagar" method="POST">
+
+    <div class="row">
+        <div class="col-lg-4">	
+            <div class="form-group">
+                <label asp-for="MerchantOrderId"></label>
+                <input class="form-control" asp-for="MerchantOrderId" value="@ViewBag.MerchantOrderId" readonly >
+            </div>
+        </div>
+    </div>  
+    <div class="row">
+        <div class="col-lg-6">	
+            <div class="form-group">
+                <label asp-for="customer.Name"></label>
+                <input class="form-control" asp-for="customer.Name" maxlength="255">
+                <span style="color:red" asp-validation-for="customer.Name"></span>
+            </div>
+        </div>
+    </div>  
+
+    <div class="row">
+        <div class="col-lg-3">	
+            <div class="form-group">
+                <label asp-for="payment.Provider"></label>
+                <select class="form-control" asp-for="payment.Provider" asp-items="Html.GetEnumSelectList<ProviderEnum>()"></select>
+            </div>
+        </div>
+        <div class="col-lg-3">	
+            <div class="form-group">
+                <label asp-for="payment.Type"></label>
+                <select class="form-control" asp-for="payment.Type"> 
+                    <option value="CreditCard">CreditCard</option>
+                </select>
+            </div>
+        </div>
+    </div>  
+
+    <div class="row">
+        <div class="col-lg-4">	
+            <div class="form-group">
+                <label asp-for="payment.Amount"></label>
+                <input class="form-control" asp-for="payment.Amount">
+                <span style="color:red" asp-validation-for="payment.Amount"></span>
+            </div>
+        </div>
+        <div class="col-lg-2">	
+            <div class="form-group">
+                <label asp-for="payment.Installments"></label>
+                <input class="form-control" asp-for="payment.Installments" data-mask="00">
+                <span style="color:red" asp-validation-for="payment.Installments"></span>
+            </div>
+        </div>
+    </div>  
+
+    <div class="row">
+        <div class="col-lg-4">	
+            <div class="form-group">
+                <label asp-for="payment.creditCard.Holder"></label>
+                <input class="form-control" asp-for="payment.creditCard.Holder" maxlength="25">
+                <span style="color:red" asp-validation-for="payment.creditCard.Holder"></span>
+            </div>
+        </div>
+        <div class="col-lg-2">	
+            <div class="form-group">
+                <label asp-for="payment.creditCard.Brand"></label>
+                <select class="form-control" asp-for="payment.creditCard.Brand" asp-items="Html.GetEnumSelectList<BrandEnum>()"> 
+                </select>
+                <span style="color:red" asp-validation-for="payment.creditCard.Brand"></span>
+            </div>
+        </div>
+    </div>   
+
+    <div class="row">
+        <div class="col-lg-4">	
+            <div class="form-group">
+                <label asp-for="payment.creditCard.CardNumber"></label>
+                <input class="form-control" asp-for="payment.creditCard.CardNumber" data-mask="0000 0000 0000 0000">
+                <span style="color:red" asp-validation-for="payment.creditCard.CardNumber"></span>
+            </div>
+        </div>
+        <div class="col-lg-2">	
+            <div class="form-group">
+                <label asp-for="payment.creditCard.ExpirationDate"></label>
+                <input class="form-control" asp-for="payment.creditCard.ExpirationDate" data-mask="00/0000">
+                <span style="color:red" asp-validation-for="payment.creditCard.ExpirationDate"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">	
+            <div class="form-group">
+                <label asp-for="payment.creditCard.SecurityCode"></label>
+                <input class="form-control" asp-for="payment.creditCard.SecurityCode" maxlength="4">
+                <span style="color:red" asp-validation-for="payment.creditCard.SecurityCode"></span>
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-primary" asp-controller="Pagamento" asp-action="Index">Voltar</a>
+    <button type="submit" class="btn btn-primary">Pagar</button>
+
+</form>
+
+
+
+@section scripts {
+   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script> -->
+    <script>
+    $("#myForm").submit(function() {
+        $("#payment_creditCard_CardNumber").unmask();
+    });
+
+    </script>
+}
+
