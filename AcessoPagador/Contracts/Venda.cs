@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AcessoPagador.Contracts
 {
-    public class Venda 
+    public class Venda
     {
         [Required(ErrorMessage = "O Numero do Pedido é obrigatório")]
         [Display(Name = "Numero do Pedido")]

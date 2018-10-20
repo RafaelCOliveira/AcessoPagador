@@ -37,7 +37,7 @@ namespace AcessoPagador.Services
 
         public async Task<Venda> Consultar(String PaymentId)
         {
-            if(Client.BaseAddress==null)
+            if (Client.BaseAddress == null)
                 Client.BaseAddress = new Uri(_configuration["EndPoint:Consulta"]);
 
             var response = await Client.GetAsync("v2/sales/" + PaymentId);
@@ -62,28 +62,28 @@ namespace AcessoPagador.Services
             return new Venda();
         }
 
-        public async Task<Venda> Capturar(String PaymentId)
+        public async Task Capturar(String PaymentId)
         {
             Client.BaseAddress = new Uri(_configuration["EndPoint:Transacional"]);
             var response = await Client.PutAsync("v2/sales/" + PaymentId.ToString() + "/capture", null);
             if (response.IsSuccessStatusCode)
             {
-                var retorno = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<Venda>(retorno);
+                await response.Content.ReadAsStringAsync();
+                //return JsonConvert.DeserializeObject<Venda>(retorno);
             }
-            return new Venda();
+            //return new Venda();
         }
 
-        public async Task<Venda> Cancelar(string PaymentId)
+        public async Task Cancelar(string PaymentId)
         {
             Client.BaseAddress = new Uri(_configuration["EndPoint:Transacional"]);
             var response = await Client.PutAsync("v2/sales/" + PaymentId.ToString() + "/void", null);
             if (response.IsSuccessStatusCode)
             {
-                var retorno = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<Venda>(retorno);
+                await response.Content.ReadAsStringAsync();
+                //return JsonConvert.DeserializeObject<Venda>(retorno);
             }
-            return new Venda();
+            //return new Venda();
         }
 
         private void AddHeaders()

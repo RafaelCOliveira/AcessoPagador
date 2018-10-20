@@ -7,7 +7,7 @@
     ViewData["Title"] = "Pagamento";    
 }
 
-<form>
+<form method="POST">
 <table class="table">
 <thead>
     <tr>
@@ -49,10 +49,16 @@
                     <button type="submit" class="btn btn-primary" asp-controller="Pagamento" asp-action="Visualizar" asp-route-id=@item.payment.PaymentId>Visualizar</button>
                 </td>
                 <td>
-    
+                    @if (item.payment.Status == 1)
+                    {
+                        <button type="submit" class="btn btn-primary" asp-controller="Pagamento" asp-action="Capturar" asp-route-id=@item.payment.PaymentId >Capturar</button>
+                    }
                 </td>
                 <td>
-
+                    @if (item.payment.Status == 1 || item.payment.Status == 2)
+                    {
+                        <button type="submit" class="btn btn-primary" asp-controller="Pagamento" asp-action="Cancelar" asp-route-id=@item.payment.PaymentId>Cancelar/Estornar</button>
+                    }
                 </td>
             </tr>
 
@@ -60,6 +66,6 @@
     </tbody>
 </table>
 </form>
-<form asp-controller="Pagamento" asp-action="Pagar" method="GET">
-    <button type="submit" class="btn btn-primary">Novo Pagamento</button>
+<form >
+    <button type="submit" class="btn btn-primary" asp-controller="Pagamento" asp-action="Pagar">Novo Pagamento</button>
 </form>

@@ -19,7 +19,7 @@ namespace AcessoPagador.Controllers
 
         private IConfiguration _configuration;
 
-        public PagamentoController(IPagamentoService pagamento,IConfiguration Configuration)
+        public PagamentoController(IPagamentoService pagamento, IConfiguration Configuration)
         {
             _pagamento = pagamento;
             _configuration = Configuration;
@@ -31,10 +31,10 @@ namespace AcessoPagador.Controllers
             List<Venda> ListVenda = new List<Venda>();
             var Payments = await _pagamento.Listar();
             foreach (Payment Pay in Payments.Payments)
-                {
-                    Venda Ret = await _pagamento.Consultar(Pay.PaymentId.ToString());
-                    ListVenda.Add(Ret);
-                }
+            {
+                Venda Ret = await _pagamento.Consultar(Pay.PaymentId.ToString());
+                ListVenda.Add(Ret);
+            }
             return View(ListVenda);
         }
 
@@ -48,40 +48,42 @@ namespace AcessoPagador.Controllers
         [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Pagar(Venda venda)
-        {            
+        {
             if (ModelState.IsValid)
             {
-                var _venda = await _pagamento.Pagar(venda);   
-                if(_venda == null)   
+                var _venda = await _pagamento.Pagar(venda);
+                if (_venda == null)
                     return View(venda);
 
-               return RedirectToAction("Visualizar","Pagamento", new {id = _venda.payment.PaymentId.ToString()});          
+                return RedirectToAction("Visualizar", "Pagamento", new { id = _venda.payment.PaymentId.ToString() });
             }
             ViewBag.MerchantOrderId = venda.MerchantOrderId;
             return View();
         }
 
-        [HttpGet]
+        [HttpGet, HttpPost]
         public async Task<IActionResult> Visualizar(String id)
         {
-            var venda = await _pagamento.Consultar(id);
-            return View(venda);
+            var _venda = await _pagamento.Consultar(id);
+            return View(_venda);
         }
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<IActionResult> Capturar(Venda venda)
-        {            
-            var _venda = await _pagamento.Capturar(venda.payment.PaymentId.ToString());
-            return RedirectToAction("Visualizar","Pagamento", new {id = venda.payment.PaymentId.ToString()});  
+        public async Task<IActionResult> Capturar(Venda venda, String id)
+        {
+            string PaymentId = venda.payment != null ? venda.payment.PaymentId.ToString() : id;
+            await _pagamento.Capturar(PaymentId);
+            return RedirectToAction("Visualizar", "Pagamento", new { id = PaymentId });
         }
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<IActionResult> Cancelar(Venda venda)
-        {            
-            var _venda = await _pagamento.Cancelar(venda.payment.PaymentId.ToString());
-            return RedirectToAction("Visualizar","Pagamento", new {id = venda.payment.PaymentId.ToString()});  
+        public async Task<IActionResult> Cancelar(Venda venda, String id)
+        {
+            string PaymentId = venda.payment != null ? venda.payment.PaymentId.ToString() : id;
+            await _pagamento.Cancelar(PaymentId);
+            return RedirectToAction("Visualizar", "Pagamento", new { id = PaymentId });
         }
 
         public IActionResult Error()

@@ -1,5 +1,4 @@
 ﻿@using AcessoPagador.Contracts.Enum
-
 @model AcessoPagador.Contracts.Venda
 
 @{
@@ -106,18 +105,13 @@
     </div>
     <a class="btn btn-primary" asp-controller="Pagamento" asp-action="Index">Voltar</a>
     <button type="submit" class="btn btn-primary">Pagar</button>
-
 </form>
 
-
-
 @section scripts {
-   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script> -->
     <script>
-    $("#myForm").submit(function() {
-        $("#payment_creditCard_CardNumber").unmask();
-    });
-
+        $("#myForm").submit(function() {
+            $("#payment_creditCard_CardNumber").unmask();
+        });
     </script>
 }
 
