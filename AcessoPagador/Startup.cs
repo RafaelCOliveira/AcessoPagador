@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Globalization;
 using System.Threading.Tasks;
 using AcessoPagador.Contracts;
 using AcessoPagador.Services;
@@ -55,6 +56,12 @@ namespace AcessoPagador
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            var cultureInfo = new CultureInfo("pt-BR");
+            cultureInfo.NumberFormat.CurrencySymbol = "R$";
+
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             app.UseMvc(routes =>
             {
