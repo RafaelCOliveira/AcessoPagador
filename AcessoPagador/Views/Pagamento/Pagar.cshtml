@@ -47,7 +47,7 @@
         <div class="col-lg-4">	
             <div class="form-group">
                 <label asp-for="payment.Amount"></label>
-                <input class="form-control" asp-for="payment.AmountD"  min="0" data-mask="00000000000000000.00" data-mask-reverse="true">
+                <input class="form-control" asp-for="payment.AmountD"  min="0" data-mask="00000000000000000,00" data-mask-reverse="true">
                 <span style="color:red" asp-validation-for="payment.Amount"></span>
             </div>
         </div>
