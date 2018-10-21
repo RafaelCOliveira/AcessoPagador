@@ -21,9 +21,33 @@ namespace AcessoPagador.Contracts
 
         [Required(ErrorMessage = "A Validade do cartão é obrigatória", AllowEmptyStrings = false)]
         [MaxLength(7)]
-        [MinLength(7,ErrorMessage = "A Validade do cartão deve conter 6 caracteres")]
+        [MinLength(7,ErrorMessage = "A Validade do cartão deve conter 7 caracteres")]
         [Display(Name = "Validade do cartão")]
-        public string ExpirationDate { get; set; }
+        public string expirationDate;
+
+        [MinLength(7,ErrorMessage = "A Validade do cartão deve conter 7 caracteres")]
+        [Required(ErrorMessage = "A Validade do cartão é obrigatória", AllowEmptyStrings = false)]
+        public string ExpirationDate
+        {
+            get
+            {
+                return expirationDate;
+          }
+            set { 
+                string valor = value;
+                if (value.Length == 7)
+                {
+                    int mes = Convert.ToInt16(value.Substring(0,2));
+                    int ano = Convert.ToInt16(value.Substring(3,4));
+                    if (!((mes > 0 && mes < 13) && (ano >1990 && ano < 2999))) 
+                    {
+                        valor = "";
+                    }
+                }
+                expirationDate = valor;
+                
+            }
+        }
 
         [Required(ErrorMessage = "O Codigo de segurança do cartão é obrigatório", AllowEmptyStrings = false)]
         [MaxLength(4)]

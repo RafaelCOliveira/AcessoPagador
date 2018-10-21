@@ -24,9 +24,24 @@ namespace AcessoPagador.Contracts
         public string Type { get; set; }
 
         [Required(ErrorMessage = "O Valor da compra é obrigatório")]
+        [Range(1, 9223372036854775807, ErrorMessage = "O Valor da compra deverá ser entre 1 e 92233720368547758,07.")]
         [Display(Name = "Valor da compra")]
-        [Range(1, 9223372036854775807, ErrorMessage = "O Valor da compra deverá ser entre 1 e 9223372036854775807.")]
         public long? Amount { get; set; }
+
+        [Required(ErrorMessage = "O Valor da compra é obrigatório")]
+        [Range(1, 922337203685477.58, ErrorMessage = "O Valor da compra deverá ser entre 1 e 92233720368547758,07.")]
+        private decimal amountD;
+        public decimal AmountD
+        {
+            get
+            {
+                return amountD;
+          }
+            set { 
+                amountD = value;
+                Amount = (long)(value * 100);
+            }
+        }
 
         [Required(ErrorMessage = "O Numero de parcelas é obrigatório")]
         [Range(1, 99, ErrorMessage = "O Numero de parcelas deverá ser entre 1 e 99.")]
@@ -72,6 +87,14 @@ namespace AcessoPagador.Contracts
 
         [Display(Name = "Mensagem retornada pelo provedor")]
         public string ProviderReturnMessage { get; set; }
+
+        public string TransformAmount
+        {
+            get
+            {
+                return ((decimal)Amount / 100).ToString("c");
+            }
+        }
 
         public List<Link> Links { get; set; }
 
