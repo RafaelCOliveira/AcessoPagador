@@ -1,4 +1,5 @@
-@using AcessoPagador.Contracts.Enum
+@using AcessoPagador.Contracts.Enumerat
+@using AcessoPagador.Contracts
 @using System
 
 @model IEnumerable<AcessoPagador.Contracts.Venda>
@@ -37,13 +38,13 @@
                     @item.payment.Type
                 </td>
                 <td>
-                    @item.payment.Amount
+                    @( ((decimal)item.payment.Amount /100).ToString("c") )
                 </td>
                 <td>
                     @item.payment.Installments
                 </td>
                 <td>
-                    @(Enum.GetName(typeof(StatusTransacaoEnum), item.payment.Status)) 
+                    @item.payment.MsgStatus 
                 </td>
                 <td>
                     <button type="submit" class="btn btn-primary" asp-controller="Pagamento" asp-action="Visualizar" asp-route-id=@item.payment.PaymentId>Visualizar</button>

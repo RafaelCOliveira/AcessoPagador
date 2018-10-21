@@ -1,4 +1,4 @@
-﻿@using AcessoPagador.Contracts.Enum
+﻿@using AcessoPagador.Contracts.Enumerat
 @model AcessoPagador.Contracts.Venda
 
 @{
@@ -48,7 +48,7 @@
             <div class="form-group">
                 <label asp-for="payment.Amount"></label>
                 <input class="form-control" asp-for="payment.Amount">
-                <span style="color:red" asp-validation-for="payment.Amount"></span>
+                <span style="color:red" asp-validation-for="payment.Amount" min="0" step="1"></span>
             </div>
         </div>
         <div class="col-lg-2">	

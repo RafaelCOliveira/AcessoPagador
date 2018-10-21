@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using AcessoPagador.Contracts.Enum;
+using AcessoPagador.Contracts.Enumerat;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -25,6 +25,7 @@ namespace AcessoPagador.Contracts
 
         [Required(ErrorMessage = "O Valor da compra é obrigatório")]
         [Display(Name = "Valor da compra")]
+        [Range(1, 9223372036854775807, ErrorMessage = "O Valor da compra deverá ser entre 1 e 9223372036854775807.")]
         public long? Amount { get; set; }
 
         [Required(ErrorMessage = "O Numero de parcelas é obrigatório")]
@@ -57,6 +58,14 @@ namespace AcessoPagador.Contracts
 
         [Display(Name = "Status")]
         public byte Status { get; set; }
+
+        public string MsgStatus
+        {
+            get
+            {
+                return DescicaoEnum.GetDescription("StatusTransacaoEnum", Convert.ToInt16(Status));
+            }
+        }
 
         [Display(Name = "Código retornado pelo provedor")]
         public string ProviderReturnCode { get; set; }

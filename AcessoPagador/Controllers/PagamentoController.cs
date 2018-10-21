@@ -9,7 +9,7 @@ using AcessoPagador.Contracts;
 using AcessoPagador.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using AcessoPagador.Contracts.Enum;
+
 
 namespace AcessoPagador.Controllers
 {
@@ -30,10 +30,13 @@ namespace AcessoPagador.Controllers
         {
             List<Venda> ListVenda = new List<Venda>();
             var Payments = await _pagamento.Listar();
-            foreach (Payment Pay in Payments.Payments)
+            if (Payments.Payments!=null)
             {
-                Venda Ret = await _pagamento.Consultar(Pay.PaymentId.ToString());
-                ListVenda.Add(Ret);
+                foreach (Payment Pay in Payments.Payments)
+                {
+                    Venda Ret = await _pagamento.Consultar(Pay.PaymentId.ToString());
+                    ListVenda.Add(Ret);
+                }
             }
             return View(ListVenda);
         }

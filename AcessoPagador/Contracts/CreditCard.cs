@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using AcessoPagador.Contracts.Enum;
+using AcessoPagador.Contracts.Enumerat;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -10,6 +10,7 @@ namespace AcessoPagador.Contracts
     {
         [Required(ErrorMessage = "O Numero do cartão é obrigatório", AllowEmptyStrings = false)]
         [MaxLength(16)]
+        [MinLength(16,ErrorMessage = "O Numero do cartão deve conter 16 numeros")]
         [Display(Name = "Numero do cartão")]
         public string CardNumber { get; set; }
 
@@ -20,11 +21,13 @@ namespace AcessoPagador.Contracts
 
         [Required(ErrorMessage = "A Validade do cartão é obrigatória", AllowEmptyStrings = false)]
         [MaxLength(7)]
+        [MinLength(7,ErrorMessage = "A Validade do cartão deve conter 6 caracteres")]
         [Display(Name = "Validade do cartão")]
         public string ExpirationDate { get; set; }
 
         [Required(ErrorMessage = "O Codigo de segurança do cartão é obrigatório", AllowEmptyStrings = false)]
         [MaxLength(4)]
+        [MinLength(3,ErrorMessage = "O Codigo de segurança no minimo conter 3 digitos")]
         [Display(Name = "Codigo de segurança")]
         public string SecurityCode { get; set; }
 

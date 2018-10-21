@@ -1,4 +1,4 @@
-namespace AcessoPagador.Contracts.Enum
+namespace AcessoPagador.Contracts.Enumerat
 {
     public enum StatusEnum
     {
