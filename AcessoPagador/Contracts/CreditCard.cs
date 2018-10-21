@@ -10,7 +10,7 @@ namespace AcessoPagador.Contracts
     {
         [Required(ErrorMessage = "O Numero do cartão é obrigatório", AllowEmptyStrings = false)]
         [MaxLength(16)]
-        [MinLength(16,ErrorMessage = "O Numero do cartão deve conter 16 numeros")]
+        [MinLength(16, ErrorMessage = "O Numero do cartão deve conter 16 numeros")]
         [Display(Name = "Numero do cartão")]
         public string CardNumber { get; set; }
 
@@ -21,37 +21,40 @@ namespace AcessoPagador.Contracts
 
         [Required(ErrorMessage = "A Validade do cartão é obrigatória", AllowEmptyStrings = false)]
         [MaxLength(7)]
-        [MinLength(7,ErrorMessage = "A Validade do cartão deve conter 7 caracteres")]
+        [MinLength(7, ErrorMessage = "Validade do cartão Inválida")]
         [Display(Name = "Validade do cartão")]
         public string expirationDate;
 
-        [MinLength(7,ErrorMessage = "A Validade do cartão deve conter 7 caracteres")]
-        [Required(ErrorMessage = "A Validade do cartão é obrigatória", AllowEmptyStrings = false)]
+        [Required(ErrorMessage = "A Validade do cartão é obrigatória")]
+        [MaxLength(7)]
+        [MinLength(7, ErrorMessage = "Validade do cartão Inválida")]
+        [Display(Name = "Validade do cartão")]
         public string ExpirationDate
         {
             get
             {
                 return expirationDate;
-          }
-            set { 
+            }
+            set
+            {
                 string valor = value;
-                if (value.Length == 7)
+                if ((value!=null && value!="")&&(value.Length == 7))
                 {
-                    int mes = Convert.ToInt16(value.Substring(0,2));
-                    int ano = Convert.ToInt16(value.Substring(3,4));
-                    if (!((mes > 0 && mes < 13) && (ano >1990 && ano < 2999))) 
+                    int mes = Convert.ToInt16(value.Substring(0, 2));
+                    int ano = Convert.ToInt16(value.Substring(3, 4));
+                    if (!((mes > 0 && mes < 13) && (ano > 1990 && ano < 2999)))
                     {
-                        valor = "";
+                        valor = "00";
                     }
                 }
                 expirationDate = valor;
-                
+
             }
         }
 
         [Required(ErrorMessage = "O Codigo de segurança do cartão é obrigatório", AllowEmptyStrings = false)]
         [MaxLength(4)]
-        [MinLength(3,ErrorMessage = "O Codigo de segurança no minimo conter 3 digitos")]
+        [MinLength(3, ErrorMessage = "O Codigo de segurança no minimo conter 3 digitos")]
         [Display(Name = "Codigo de segurança")]
         public string SecurityCode { get; set; }
 
